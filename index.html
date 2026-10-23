@@ -3,459 +3,681 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#180e20">
-<title>Frutas Studio AI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frutas Studio AI 3.0</title>
 <style>
-:root {
-  color-scheme: dark;
-  --bg: #120c18;
-  --panel: #21172b;
-  --line: #49334f;
-  --pink: #ff5687;
-  --gold: #ffc879;
-  --text: #fff4fa;
-  --muted: #c8b7ce;
+:root{
+--bg:#120c1b;--card:#261830;--line:#674469;
+--pink:#ff73b5;--text:#fff;--muted:#d7bddb
 }
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: radial-gradient(ellipse at top, #43213f, var(--bg) 65%);
-  color: var(--text);
-  font-family: system-ui, -apple-system, sans-serif;
-  min-height: 100vh;
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{background:linear-gradient(135deg,#35142e,#24112e);padding:28px 18px;text-align:center;border-bottom:1px solid var(--line)}
+h1{font-size:29px;color:var(--pink);margin:0 0 10px}
+h2{font-size:23px;margin:0 0 16px}
+h3{color:var(--pink)}
+p{line-height:1.55}
+main{max-width:850px;margin:auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:18px}
+label{display:block;margin:15px 0 7px;font-weight:bold}
+input,select,textarea{
+width:100%;background:#160e20;color:white;
+border:1px solid #88628b;border-radius:11px;
+padding:13px;font-size:16px
 }
-header {
-  padding: 23px 17px;
-  border-bottom: 1px solid var(--line);
-  background: #170e20;
+textarea{min-height:105px;resize:vertical}
+button{
+border:0;border-radius:12px;background:var(--pink);
+color:#270e24;font-size:15px;font-weight:bold;
+padding:14px;cursor:pointer;margin:5px 0
 }
-.logo { font-size: 25px; font-weight: 900; letter-spacing: -.8px; }
-.logo span { color: var(--pink); }
-header p { color: var(--muted); margin: 5px 0 0; font-size: 13px; }
-main { max-width: 850px; margin: auto; padding: 16px; }
-.hero {
-  padding: 23px 18px;
-  border: 1px solid #754264;
-  border-radius: 19px;
-  background: linear-gradient(135deg, #592544, #291832);
-  margin-bottom: 18px;
-}
-.tag {
-  display: inline-block;
-  background: #7b3157;
-  color: #ffe0ed;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-h1 { font-size: 29px; line-height: 1.15; margin: 0 0 10px; }
-.hero p { color: #edd4e5; line-height: 1.6; margin: 0; }
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 17px;
-  margin: 16px 0;
-}
-h2 { font-size: 19px; margin: 0 0 13px; }
-label { display: block; color: #e8d7ec; font-size: 13px; margin: 13px 0 7px; }
-input, select, textarea {
-  width: 100%;
-  background: #130d19;
-  border: 1px solid #614766;
-  border-radius: 10px;
-  color: white;
-  padding: 12px;
-  font: inherit;
-}
-textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
-button {
-  border: 0;
-  border-radius: 10px;
-  padding: 12px 14px;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 750;
-  cursor: pointer;
-}
-button:focus-visible, input:focus-visible, textarea:focus-visible,
-select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
-.primary {
-  width: 100%;
-  margin-top: 15px;
-  color: #2b0d20;
-  background: linear-gradient(100deg, #ff5687, #ffae68);
-}
-.secondary { background: #392540; color: white; border: 1px solid #68466d; }
-.danger { background: #49232f; color: #ffd9e1; border: 1px solid #854257; }
-.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
-.character {
-  background: #2a1d32;
-  border: 1px solid #4c3553;
-  border-radius: 13px;
-  padding: 12px;
-  min-width: 0;
-}
-.face { font-size: 32px; }
-.character strong { display: block; margin: 5px 0; }
-.character p { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 5px 0 0; }
-.note { font-size: 12px; line-height: 1.6; color: var(--muted); }
-.output {
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  line-height: 1.65;
-  font-size: 14px;
-  color: #faeaf5;
-}
-.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.saved-item {
-  border-bottom: 1px solid var(--line);
-  padding: 12px 0;
-}
-.saved-title { font-size: 13px; margin-bottom: 8px; overflow-wrap: anywhere; }
-.status { color: var(--gold); font-size: 12px; margin-top: 9px; min-height: 18px; }
-footer { text-align: center; padding: 24px 15px; color: #b6a2bc; font-size: 12px; }
-@media (min-width: 600px) {
-  .cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
-  main { padding: 22px; }
-}
-@media (max-width: 380px) {
-  .row { grid-template-columns: 1fr; }
-  h1 { font-size: 25px; }
-  .logo { font-size: 22px; }
-}
+button:disabled{opacity:.5}
+.full{width:100%}
+.secondary{background:#493354;color:white}
+.danger{background:#843850;color:white}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scene{background:#190f23;border:1px solid #65416b;border-radius:14px;padding:16px;margin:14px 0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.tag{display:inline-block;background:#6d315d;border-radius:30px;padding:7px 12px;font-size:12px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;line-height:1.5}
+.saved{padding:12px;border-bottom:1px solid #614465}
+.status{padding:12px;background:#35253c;border-radius:10px;margin-top:12px}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <header>
-  <div class="logo">🍓 FRUTAS <span>STUDIO AI</span></div>
-  <p>Seu estúdio de novelas cinematográficas com frutas</p>
+<h1>🍓 FRUTAS STUDIO AI 3.0</h1>
+<p>Seu estúdio de novelas, animações, roteiros e vozes</p>
+<span class="tag">🎬 Vídeo</span>
+<span class="tag">🎙️ Voz</span>
+<span class="tag">📚 Episódios</span>
 </header>
 
 <main>
-  <section class="hero">
-    <span class="tag">✦ ESTÚDIO CRIATIVO</span>
-    <h1>Histórias deliciosamente dramáticas.</h1>
-    <p>Crie roteiros, organize cenas e prepare prompts para seu universo de frutas em 3D.</p>
-  </section>
 
-  <section class="panel">
-    <h2>🎬 Criador de episódios</h2>
+<section class="card">
+<h2>🎬 Criador de episódios</h2>
 
-    <label for="series">Nome da série</label>
-    <input id="series" value="Drama de Frutas — O Segredo do Morango">
+<label>Nome da série</label>
+<input id="serie" value="O Segredo do Morango">
 
-    <div class="row">
-      <div>
-        <label for="episode">Episódio</label>
-        <select id="episode"></select>
-      </div>
-      <div>
-        <label for="style">Estilo da história</label>
-        <select id="style">
-          <option>Novela brasileira dramática</option>
-          <option>Romance e traição</option>
-          <option>Mistério e suspense</option>
-          <option>Comédia dramática</option>
-          <option>Drama de família</option>
-        </select>
-      </div>
-    </div>
+<label>Episódio</label>
+<select id="episodio"></select>
 
-    <label for="idea">O que acontece neste episódio?</label>
-    <textarea id="idea" placeholder="Ex.: Melissa encontra uma mensagem misteriosa no celular de Enzo..."></textarea>
+<label>Estilo visual</label>
+<select id="estilo">
+<option>Realista cinematográfico</option>
+<option>Animação 3D</option>
+<option>Novela de frutas</option>
+<option>Anime</option>
+<option>Stop motion</option>
+<option>Ação realista</option>
+<option>Fantasia mágica</option>
+<option>Comédia infantil</option>
+</select>
 
-    <label for="location">Cenário principal</label>
-    <select id="location">
-      <option>Uma mansão luxuosa no Brasil</option>
-      <option>Uma cobertura moderna em São Paulo</option>
-      <option>Um restaurante sofisticado</option>
-      <option>Uma praia brasileira ao pôr do sol</option>
-      <option>Uma festa de gala cheia de segredos</option>
-      <option>Uma rua urbana à noite</option>
-    </select>
+<label>Formato</label>
+<select id="formato">
+<option value="9:16">9:16 — TikTok / Shorts</option>
+<option value="16:9">16:9 — YouTube</option>
+<option value="1:1">1:1 — Quadrado</option>
+</select>
 
-    <button class="primary" id="generate">✨ Criar roteiro e 3 cenas</button>
-    <div class="status" id="status" role="status" aria-live="polite"></div>
-    <p class="note">Cada episódio tem 30 segundos: 3 cenas de 10 segundos. Esta versão gera texto e prompts, não arquivos de vídeo.</p>
-  </section>
+<label>Duração por cena</label>
+<select id="duracao">
+<option value="15">15 segundos</option>
+<option value="10">10 segundos</option>
+<option value="5">5 segundos</option>
+</select>
 
-  <section class="panel">
-    <h2>🍒 Elenco principal</h2>
-    <div class="cards">
-      <article class="character">
-        <div class="face">🍓</div>
-        <strong>Melissa Morango</strong>
-        <p>Protagonista inteligente, orgulhosa e emocional. Pele vermelha com sementes, cabelo de folhas verdes e vestido vermelho elegante.</p>
-      </article>
-      <article class="character">
-        <div class="face">🍍</div>
-        <strong>Enzo Abacaxi</strong>
-        <p>Charmoso, ambicioso e misterioso. Pele dourada texturizada, coroa de folhas pontudas, terno creme e relógio dourado.</p>
-      </article>
-      <article class="character">
-        <div class="face">🍑</div>
-        <strong>Jade Pêssego</strong>
-        <p>Observadora e fofoqueira. Pele rosada aveludada e roupa lilás sofisticada.</p>
-      </article>
-      <article class="character">
-        <div class="face">🍌</div>
-        <strong>Bianca Banana</strong>
-        <p>Calculista e competitiva. Roupa de gala preta e dourada, postura confiante e presença marcante.</p>
-      </article>
-      <article class="character">
-        <div class="face">🍉</div>
-        <strong>Kauã Melancia</strong>
-        <p>Leal e desconfiado. Roupa urbana escura, corrente prateada e olhar atento.</p>
-      </article>
-      <article class="character">
-        <div class="face">🍋</div>
-        <strong>Léo Limão</strong>
-        <p>Engraçado e dramático. Jaqueta turquesa, celular sempre na mão e dificuldade para guardar segredos.</p>
-      </article>
-    </div>
-  </section>
+<label>Quantidade de cenas</label>
+<select id="quantidade">
+<option value="3">3 cenas</option>
+<option value="6">6 cenas</option>
+<option value="12">12 cenas</option>
+<option value="18">18 cenas</option>
+</select>
 
-  <section class="panel" id="resultPanel">
-    <h2>📝 Roteiro e prompts</h2>
-    <div id="result" class="output">Seu roteiro aparecerá aqui. Escolha um episódio, descreva sua ideia e toque em “Criar roteiro e 3 cenas”.</div>
-    <div class="actions">
-      <button class="secondary" id="copy">📋 Copiar roteiro</button>
-      <button class="secondary" id="save">💾 Salvar roteiro</button>
-    </div>
-    <div class="status" id="resultStatus" role="status" aria-live="polite"></div>
-  </section>
+<label>Personagens</label>
+<textarea id="personagens">Melissa Morango: corajosa e emotiva.
+Enzo Abacaxi: misterioso e carismático.
+Jade Pêssego: elegante e enigmática.</textarea>
 
-  <section class="panel">
-    <h2>📚 Roteiros salvos</h2>
-    <p class="note">Os roteiros ficam guardados no armazenamento deste navegador neste dispositivo.</p>
-    <div id="savedList"></div>
-  </section>
+<label>Ideia do episódio</label>
+<textarea id="ideia">Melissa Morango descobre que Enzo Abacaxi está escondendo um segredo.</textarea>
+
+<label>Tom da história</label>
+<select id="tom">
+<option>Suspense e romance</option>
+<option>Drama intenso</option>
+<option>Comédia</option>
+<option>Aventura</option>
+<option>Terror leve</option>
+<option>Educacional infantil</option>
+</select>
+
+<button class="full" onclick="gerar()">
+✨ Criar roteiro e cenas
+</button>
+<button class="full secondary" onclick="salvar()">
+💾 Salvar episódio
+</button>
+</section>
+
+<section class="card">
+<h2>📖 Roteiro do episódio</h2>
+<p class="muted small">
+As cenas abaixo são geradas por regras locais.
+Uma IA roteirista externa poderá ser conectada depois.
+</p>
+<div id="resultado">
+Crie um episódio para visualizar as cenas.
+</div>
+<div class="grid">
+<button onclick="copiar()">📋 Copiar roteiro</button>
+<button class="secondary" onclick="exportar()">📦 Exportar JSON</button>
+</div>
+</section>
+
+<section class="card">
+<h2>🎙️ Estúdio de vozes</h2>
+
+<label>Idioma</label>
+<select id="idioma">
+<option value="pt-BR">Português brasileiro</option>
+<option value="ja-JP">Japonês</option>
+<option value="en-US">Inglês</option>
+</select>
+
+<label>Voz disponível no aparelho</label>
+<select id="vozSelecionada">
+<option value="">Voz padrão</option>
+</select>
+
+<label>Velocidade</label>
+<input type="range" id="velocidade" min="0.6" max="1.5" step="0.1" value="1">
+
+<label>Texto para narrar</label>
+<textarea id="textoVoz">Melissa: Enzo, o que você está escondendo de mim?</textarea>
+
+<button class="full" onclick="falar()">🔊 Ouvir voz</button>
+<button class="full secondary" onclick="pararVoz()">⏹️ Parar voz</button>
+
+<p class="muted small">
+A narração usa as vozes instaladas no navegador ou Android.
+Ela não gera automaticamente um arquivo de áudio.
+</p>
+</section>
+
+<section class="card">
+<h2>🎵 Efeitos sonoros</h2>
+<p class="muted">
+Teste efeitos simples gerados pelo navegador.
+</p>
+<div class="grid">
+<button onclick="efeito('suspense')">😨 Suspense</button>
+<button onclick="efeito('notificacao')">📱 Notificação</button>
+<button onclick="efeito('impacto')">💥 Impacto</button>
+<button onclick="efeito('alegria')">🎉 Alegria</button>
+</div>
+<p class="small muted">
+Esses são efeitos eletrônicos simples, não músicas produzidas por IA.
+</p>
+</section>
+
+<section class="card">
+<h2>🎥 Frutas Media Engine</h2>
+<p>
+Prepare prompts para gerar cenas em ferramentas externas
+de vídeo por IA.
+</p>
+<button class="full" onclick="copiarPrompts()">
+🎬 Copiar prompts de vídeo
+</button>
+<button class="full secondary" onclick="exportar()">
+📦 Exportar projeto para integração
+</button>
+<div class="status">
+<strong>Estado atual:</strong>
+preparação de vídeos e áudios.
+<br><br>
+A geração real de clipes ainda precisa de
+um modelo de IA executado em servidor ou serviço externo.
+</div>
+</section>
+
+<section class="card">
+<h2>📚 Meus episódios salvos</h2>
+<div id="salvos">Nenhum episódio salvo.</div>
+<button class="full secondary" onclick="backup()">
+⬇️ Fazer backup de todos os episódios
+</button>
+<label>Restaurar backup JSON</label>
+<input type="file" id="arquivoBackup" accept=".json,application/json" onchange="restaurar(event)">
+</section>
+
+<section class="card">
+<h2>ℹ️ Sobre o aplicativo</h2>
+<p>
+Os roteiros e projetos podem ser salvos no armazenamento
+local do navegador.
+</p>
+<p class="muted small">
+Se você limpar os dados do navegador, poderá perder os
+episódios salvos. Faça backups regularmente.
+</p>
+</section>
+
 </main>
 
-<footer>Frutas Studio AI · Versão inicial 🍓<br>Projeto em desenvolvimento</footer>
-
 <script>
-(function () {
-  "use strict";
+"use strict";
 
-  const $ = function (id) {
-    return document.getElementById(id);
-  };
+const $=id=>document.getElementById(id);
+const CHAVE="frutas_studio_v3";
+let projeto=null;
+let audioCtx=null;
 
-  const STORAGE_KEY = "frutasStudioAI_saved_v1";
-  let currentScript = "";
+for(let i=1;i<=30;i++){
+const op=document.createElement("option");
+op.value=String(i);
+op.textContent="Episódio "+String(i).padStart(2,"0");
+$("episodio").appendChild(op);
+}
 
-  const characters = [
-    "Melissa Morango: personagem feminina antropomórfica, pele vermelha com sementes de morango, cabelo de folhas verdes e vestido vermelho elegante.",
-    "Enzo Abacaxi: personagem masculina antropomórfica, pele dourada com textura de abacaxi, coroa de folhas verdes pontudas, terno creme e relógio dourado.",
-    "Jade Pêssego: personagem feminina antropomórfica, pele rosada aveludada e roupa lilás sofisticada.",
-    "Bianca Banana: personagem feminina antropomórfica, roupa de gala preta e dourada, postura calculista e competitiva.",
-    "Kauã Melancia: personagem masculina antropomórfica, roupa urbana escura e corrente prateada.",
-    "Léo Limão: personagem masculina antropomórfica, jaqueta turquesa e celular sempre na mão."
-  ].join("\n");
+function campo(id){return $(id).value}
 
-  for (let i = 1; i <= 30; i++) {
-    const option = document.createElement("option");
-    option.value = String(i);
-    option.textContent = "Episódio " + String(i).padStart(2, "0");
-    $("episode").appendChild(option);
-  }
+function lerSalvos(){
+try{
+const x=JSON.parse(localStorage.getItem(CHAVE)||"{}");
+return x&&typeof x==="object"&&!Array.isArray(x)?x:{};
+}catch(e){return {}}
+}
 
-  function readSaved() {
-    try {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      return Array.isArray(data) ? data : [];
-    } catch (error) {
-      return [];
-    }
-  }
+function gravarSalvos(x){
+try{
+localStorage.setItem(CHAVE,JSON.stringify(x));
+return true;
+}catch(e){
+alert("Não foi possível salvar. Verifique o espaço do navegador.");
+return false;
+}
+}
 
-  function setStatus(message, target) {
-    $(target || "status").textContent = message;
-  }
+function baixarArquivo(nome,conteudo,tipo){
+const blob=new Blob([conteudo],{type:tipo});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;
+a.download=nome;
+document.body.appendChild(a);
+a.click();
+a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),3000);
+}
 
-  function makeScene(title, time, action, location, number) {
-    return (
-      "CENA " + number + " — " + title + " (" + time + ")\n" +
-      "AÇÃO: " + action + "\n" +
-      "PROMPT VISUAL: Animação 3D cinematográfica sofisticada, " +
-      location + ". Frutas antropomórficas com anatomia estilizada, " +
-      "roupas detalhadas, expressões faciais legíveis, iluminação de novela, " +
-      "enquadramento vertical 9:16, movimento de câmera fluido, materiais " +
-      "realistas e profundidade de campo. Manter rigorosamente o mesmo " +
-      "design dos personagens em todas as cenas. Sem legendas embutidas.\n" +
-      "ÁUDIO: Vozes em português brasileiro natural, diálogo expressivo, " +
-      "trilha dramática original e efeitos sonoros sincronizados.\n" +
-      "DURAÇÃO: 10 segundos.\n"
-    );
-  }
+function gerar(){
+const ideia=campo("ideia").trim();
+if(!ideia){alert("Escreva a ideia do episódio.");return}
 
-  function generateScript() {
-    const series = $("series").value.trim() || "Drama de Frutas";
-    const episode = Number($("episode").value);
-    const style = $("style").value;
-    const location = $("location").value;
-    const idea = $("idea").value.trim() ||
-      "Melissa percebe que Enzo está escondendo um segredo sobre Bianca.";
+const n=Number(campo("quantidade"));
+const duracao=Number(campo("duracao"));
+const estilo=campo("estilo");
+const formato=campo("formato");
+const tom=campo("tom");
+const personagens=campo("personagens");
 
-    const scene1 =
-      "A história começa com " + idea +
-      " A câmera revela o ambiente e mostra Melissa percebendo um detalhe estranho.";
-    const scene2 =
-      "Melissa confronta Enzo. Ele tenta disfarçar o nervosismo, enquanto " +
-      "uma pista inesperada sugere que Bianca está envolvida. Use diálogos " +
-      "curtos, naturais e cheios de tensão em português brasileiro.";
-    const scene3 =
-      "Quando Melissa pensa ter entendido tudo, chega uma mensagem ou surge " +
-      "uma testemunha inesperada. Termine com uma revelação surpreendente, " +
-      "uma reação emocional forte e um gancho para o próximo episódio.";
+const acoes=[
+"Apresentação do conflito e reação dos personagens.",
+"Uma pista inesperada aparece.",
+"Os personagens discutem o que aconteceu.",
+"Uma informação muda a direção da história.",
+"Alguém tenta esconder a verdade.",
+"Uma revelação provoca surpresa.",
+"Um personagem toma uma decisão arriscada.",
+"Uma nova pista aumenta a tensão.",
+"Os personagens entram em confronto.",
+"Um detalhe importante é descoberto.",
+"A situação parece finalmente resolvida.",
+"Um acontecimento inesperado cria um gancho."
+];
 
-    currentScript =
-      series + "\n" +
-      "EPISÓDIO " + String(episode).padStart(2, "0") + " DE 30\n" +
-      "ESTILO: " + style + "\n" +
-      "CENÁRIO: " + location + "\n\n" +
-      "IDEIA CENTRAL:\n" + idea + "\n\n" +
-      "ELENCO E CONTINUIDADE VISUAL:\n" + characters + "\n\n" +
-      "DIREÇÃO GERAL:\n" +
-      "Novela brasileira com personagens adultos estilizados em 3D, " +
-      "drama emocional, diálogos naturais em português brasileiro, " +
-      "cinematografia sofisticada, iluminação detalhada e continuidade " +
-      "visual entre as cenas. Cada cena deve durar aproximadamente 10 segundos.\n\n" +
-      makeScene("A DESCOBERTA", "0–10 s", scene1, location, 1) + "\n" +
-      makeScene("O CONFRONTO", "10–20 s", scene2, location, 2) + "\n" +
-      makeScene("O SEGREDO", "20–30 s", scene3, location, 3) + "\n" +
-      "GANCHO PARA O PRÓXIMO EPISÓDIO:\n" +
-      "A revelação final deixa uma pergunta importante sem resposta.\n\n" +
-      "NOTA: Este aplicativo prepara o roteiro e os prompts em texto. " +
-      "A geração de vídeos exige uma ferramenta de vídeo com IA separada.";
+const sons=[
+"Ambiente discreto e música de suspense.",
+"Som de notificação e reação surpresa.",
+"Silêncio dramático e batida grave.",
+"Trilha de tensão crescente."
+];
 
-    $("result").textContent = currentScript;
-    setStatus("Roteiro criado! Você já pode copiar ou salvar.");
-    $("resultPanel").scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+const cenas=[];
 
-  async function copyScript() {
-    if (!currentScript) {
-      setStatus("Crie um roteiro primeiro.", "resultStatus");
-      return;
-    }
+for(let i=0;i<n;i++){
+let acao=acoes[i%acoes.length];
+let dialogo;
 
-    try {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(currentScript);
-      } else {
-        const area = document.createElement("textarea");
-        area.value = currentScript;
-        area.style.position = "fixed";
-        area.style.opacity = "0";
-        document.body.appendChild(area);
-        area.focus();
-        area.select();
-        const copied = document.execCommand("copy");
-        area.remove();
-        if (!copied) throw new Error("Falha ao copiar");
-      }
-      setStatus("Roteiro copiado para a área de transferência.", "resultStatus");
-    } catch (error) {
-      setStatus("Não foi possível copiar automaticamente. Selecione e copie o texto do roteiro.", "resultStatus");
-    }
-  }
+if(i===0){
+dialogo="Melissa: Enzo, preciso saber a verdade.";
+}else if(i===n-1){
+dialogo="Melissa: Isso ainda não acabou!";
+}else if(i%3===1){
+dialogo="Enzo: Existe algo que eu ainda não contei.";
+}else if(i%3===2){
+dialogo="Melissa: Então me explique o que aconteceu!";
+}else{
+dialogo="Enzo: Você precisa confiar em mim.";
+}
 
-  function renderSaved() {
-    const container = $("savedList");
-    container.replaceChildren();
-    const items = readSaved();
+const prompt=
+"Gerar vídeo "+estilo+
+", proporção "+formato+
+", duração "+duracao+" segundos. "+
+"Personagens: "+personagens+" "+
+"Contexto da história: "+ideia+" "+
+"Cena: "+acao+" "+
+"Tom: "+tom+". "+
+"Texturas detalhadas, iluminação cinematográfica, "+
+"continuidade visual dos personagens, movimentos naturais, "+
+"enquadramento adequado ao formato. "+
+"Não inserir letras nem legendas na imagem.";
 
-    if (items.length === 0) {
-      const empty = document.createElement("p");
-      empty.className = "note";
-      empty.textContent = "Nenhum roteiro salvo ainda.";
-      container.appendChild(empty);
-      return;
-    }
+cenas.push({
+numero:i+1,
+duracao,
+acao,
+dialogo,
+som:sons[i%sons.length],
+promptVideo:prompt,
+promptAudio:
+"Diálogo em português brasileiro: "+dialogo+
+". Efeitos: "+sons[i%sons.length]
+});
+}
 
-    items.forEach(function (item, index) {
-      const wrapper = document.createElement("div");
-      wrapper.className = "saved-item";
+projeto={
+versao:3,
+serie:campo("serie"),
+episodio:Number(campo("episodio")),
+ideia,personagens,estilo,formato,tom,duracao,
+idioma:campo("idioma"),
+cenas
+};
 
-      const title = document.createElement("div");
-      title.className = "saved-title";
-      title.textContent = item.title + " · " + item.date;
+mostrarProjeto();
+}
 
-      const openButton = document.createElement("button");
-      openButton.className = "secondary";
-      openButton.textContent = "Abrir";
-      openButton.addEventListener("click", function () {
-        currentScript = item.text;
-        $("result").textContent = currentScript;
-        setStatus("Roteiro carregado.", "resultStatus");
-        $("resultPanel").scrollIntoView({ behavior: "smooth", block: "start" });
-      });
+function mostrarProjeto(){
+if(!projeto)return;
+const area=$("resultado");
+area.replaceChildren();
 
-      const deleteButton = document.createElement("button");
-      deleteButton.className = "danger";
-      deleteButton.textContent = "Excluir";
-      deleteButton.style.marginLeft = "7px";
-      deleteButton.addEventListener("click", function () {
-        const updated = readSaved();
-        updated.splice(index, 1);
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-          renderSaved();
-          setStatus("Roteiro excluído.");
-        } catch (error) {
-          setStatus("Não foi possível atualizar os roteiros salvos.");
-        }
-      });
+const titulo=document.createElement("h3");
+titulo.textContent=
+projeto.serie+" — Episódio "+projeto.episodio;
+area.appendChild(titulo);
 
-      wrapper.appendChild(title);
-      wrapper.appendChild(openButton);
-      wrapper.appendChild(deleteButton);
-      container.appendChild(wrapper);
-    });
-  }
+const resumo=document.createElement("p");
+resumo.textContent=
+projeto.cenas.length+" cenas | "+
+(projeto.cenas.length*projeto.duracao)+
+" segundos | "+projeto.estilo;
+area.appendChild(resumo);
 
-  function saveScript() {
-    if (!currentScript) {
-      setStatus("Crie um roteiro antes de salvar.", "resultStatus");
-      return;
-    }
+projeto.cenas.forEach(c=>{
+const div=document.createElement("div");
+div.className="scene";
 
-    const items = readSaved();
-    const episode = $("episode").value;
-    const title = ($("series").value.trim() || "Drama de Frutas") +
-      " — Episódio " + String(episode).padStart(2, "0");
+const h=document.createElement("h3");
+h.textContent="Cena "+c.numero;
+div.appendChild(h);
 
-    items.unshift({
-      title: title,
-      episode: episode,
-      date: new Date().toLocaleDateString("pt-BR"),
-      text: currentScript
-    });
+const p=document.createElement("pre");
+p.textContent=
+"AÇÃO:\n"+c.acao+
+"\n\nDIÁLOGO:\n"+c.dialogo+
+"\n\nSOM:\n"+c.som+
+"\n\nPROMPT DE VÍDEO:\n"+c.promptVideo;
+div.appendChild(p);
 
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-      renderSaved();
-      setStatus("Roteiro salvo neste dispositivo.", "resultStatus");
-    } catch (error) {
-      setStatus("O armazenamento está cheio ou indisponível. Copie o roteiro para não perdê-lo.", "resultStatus");
-    }
-  }
+const bot=document.createElement("button");
+bot.className="secondary full";
+bot.textContent="🔊 Ouvir diálogo";
+bot.onclick=()=>{
+$("textoVoz").value=c.dialogo;
+falar();
+};
+div.appendChild(bot);
 
-  $("generate").addEventListener("click", generateScript);
-  $("copy").addEventListener("click", copyScript);
-  $("save").addEventListener("click", saveScript);
+area.appendChild(div);
+});
+}
 
-  renderSaved();
-})();
+function textoRoteiro(){
+if(!projeto)return "";
+return [
+projeto.serie,
+"Episódio "+projeto.episodio,
+"Ideia: "+projeto.ideia,
+"Estilo: "+projeto.estilo,
+...projeto.cenas.map(c=>
+"\nCENA "+c.numero+
+"\n"+c.acao+
+"\nFALA: "+c.dialogo+
+"\nSOM: "+c.som+
+"\nVÍDEO: "+c.promptVideo
+)
+].join("\n");
+}
+
+async function copiarTexto(texto){
+try{
+await navigator.clipboard.writeText(texto);
+alert("Copiado!");
+}catch(e){
+const t=document.createElement("textarea");
+t.value=texto;
+document.body.appendChild(t);
+t.select();
+try{
+document.execCommand("copy");
+alert("Texto selecionado para cópia.");
+}catch(err){
+alert("Não foi possível copiar automaticamente.");
+}
+t.remove();
+}
+}
+
+function copiar(){
+if(!projeto){alert("Gere um episódio primeiro.");return}
+copiarTexto(textoRoteiro());
+}
+
+function copiarPrompts(){
+if(!projeto){alert("Gere um episódio primeiro.");return}
+copiarTexto(projeto.cenas.map(c=>
+"CENA "+c.numero+"\n"+
+c.promptVideo+"\n"+
+c.promptAudio
+).join("\n\n"));
+}
+
+function exportar(){
+if(!projeto){alert("Gere um episódio primeiro.");return}
+baixarArquivo(
+"frutas-episodio-"+projeto.episodio+".json",
+JSON.stringify(projeto,null,2),
+"application/json"
+);
+}
+
+function salvar(){
+if(!projeto){alert("Gere um episódio primeiro.");return}
+const salvos=lerSalvos();
+const chave=projeto.serie+"::"+projeto.episodio;
+salvos[chave]=projeto;
+if(gravarSalvos(salvos)){
+listarSalvos();
+alert("Episódio salvo!");
+}
+}
+
+function listarSalvos(){
+const area=$("salvos");
+area.replaceChildren();
+const salvos=lerSalvos();
+const chaves=Object.keys(salvos);
+
+if(!chaves.length){
+area.textContent="Nenhum episódio salvo.";
+return;
+}
+
+chaves.forEach(chave=>{
+const p=salvos[chave];
+const div=document.createElement("div");
+div.className="saved";
+
+const titulo=document.createElement("p");
+titulo.textContent=
+(p.serie||"Série")+" — Episódio "+p.episodio;
+div.appendChild(titulo);
+
+const abrir=document.createElement("button");
+abrir.textContent="Abrir";
+abrir.onclick=()=>abrirSalvo(chave);
+div.appendChild(abrir);
+
+const apagar=document.createElement("button");
+apagar.className="danger";
+apagar.textContent="Excluir";
+apagar.onclick=()=>{
+if(!confirm("Excluir este episódio?"))return;
+const dados=lerSalvos();
+delete dados[chave];
+gravarSalvos(dados);
+listarSalvos();
+};
+div.appendChild(apagar);
+
+area.appendChild(div);
+});
+}
+
+function abrirSalvo(chave){
+const p=lerSalvos()[chave];
+if(!p)return;
+projeto=p;
+
+$("serie").value=p.serie||"";
+$("episodio").value=String(p.episodio);
+$("ideia").value=p.ideia||"";
+$("personagens").value=p.personagens||"";
+$("estilo").value=p.estilo;
+$("formato").value=p.formato;
+$("tom").value=p.tom;
+$("duracao").value=String(p.duracao);
+$("quantidade").value=String(p.cenas.length);
+$("idioma").value=p.idioma||"pt-BR";
+
+mostrarProjeto();
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function backup(){
+baixarArquivo(
+"backup-frutas-studio.json",
+JSON.stringify(lerSalvos(),null,2),
+"application/json"
+);
+}
+
+async function restaurar(event){
+const file=event.target.files[0];
+if(!file)return;
+try{
+const dados=JSON.parse(await file.text());
+if(!dados||typeof dados!=="object"||Array.isArray(dados)){
+throw new Error("Formato inválido");
+}
+const validos={};
+for(const [chave,p] of Object.entries(dados)){
+if(p&&typeof p==="object"&&
+Array.isArray(p.cenas)&&
+typeof p.serie==="string"&&
+Number.isInteger(p.episodio)){
+validos[chave]=p;
+}
+}
+if(!Object.keys(validos).length){
+throw new Error("Nenhum episódio válido");
+}
+if(!confirm("Restaurar episódios do arquivo?"))return;
+const atual=lerSalvos();
+if(gravarSalvos({...atual,...validos})){
+listarSalvos();
+alert("Backup restaurado!");
+}
+}catch(e){
+alert("Não foi possível restaurar: "+e.message);
+}
+event.target.value="";
+}
+
+function carregarVozes(){
+if(!("speechSynthesis" in window))return;
+const lista=$("vozSelecionada");
+const anterior=lista.value;
+lista.replaceChildren();
+
+const padrao=document.createElement("option");
+padrao.value="";
+padrao.textContent="Voz padrão";
+lista.appendChild(padrao);
+
+const vozes=speechSynthesis.getVoices();
+vozes.forEach(v=>{
+const op=document.createElement("option");
+op.value=v.voiceURI;
+op.textContent=v.name+" ("+v.lang+")";
+lista.appendChild(op);
+});
+lista.value=anterior;
+}
+
+function falar(){
+if(!("speechSynthesis" in window)){
+alert("Seu navegador não oferece síntese de voz.");
+return;
+}
+const texto=$("textoVoz").value.trim();
+if(!texto)return;
+
+speechSynthesis.cancel();
+const u=new SpeechSynthesisUtterance(texto);
+u.lang=campo("idioma");
+u.rate=Number(campo("velocidade"));
+
+const escolhida=speechSynthesis.getVoices().find(
+v=>v.voiceURI===campo("vozSelecionada")
+);
+if(escolhida)u.voice=escolhida;
+
+speechSynthesis.speak(u);
+}
+
+function pararVoz(){
+if("speechSynthesis" in window){
+speechSynthesis.cancel();
+}
+}
+
+function efeito(tipo){
+try{
+const Audio=window.AudioContext||window.webkitAudioContext;
+if(!Audio){
+alert("Áudio não suportado.");
+return;
+}
+if(!audioCtx)audioCtx=new Audio();
+audioCtx.resume();
+
+const agora=audioCtx.currentTime;
+const notas={
+suspense:[180,150,110],
+notificacao:[650,850],
+impacto:[160,65],
+alegria:[440,550,660,880]
+}[tipo];
+
+notas.forEach((freq,i)=>{
+const inicio=agora+i*0.17;
+const osc=audioCtx.createOscillator();
+const ganho=audioCtx.createGain();
+
+osc.type=tipo==="impacto"?"sawtooth":"sine";
+osc.frequency.setValueAtTime(freq,inicio);
+ganho.gain.setValueAtTime(0.0001,inicio);
+ganho.gain.exponentialRampToValueAtTime(0.12,inicio+0.02);
+ganho.gain.exponentialRampToValueAtTime(0.0001,inicio+0.16);
+
+osc.connect(ganho);
+ganho.connect(audioCtx.destination);
+osc.start(inicio);
+osc.stop(inicio+0.17);
+});
+}catch(e){
+alert("Não foi possível reproduzir o efeito.");
+}
+}
+
+if("speechSynthesis" in window){
+speechSynthesis.onvoiceschanged=carregarVozes;
+carregarVozes();
+}
+listarSalvos();
 </script>
 </body>
-                                                            </html>
-          
-                                                  
+</html>

@@ -717,7 +717,7 @@ async function gerarIA(){
   const pin=campo("pin")||cfg.pin||"";
 
   const resposta=await fetch(
- new URL("/roteiro", url).href,{
+ DEFAULT_URL + "/roteiro",{
 
    method:"POST",
    headers:{"Content-Type":"application/json"},

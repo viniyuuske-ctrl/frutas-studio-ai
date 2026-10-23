@@ -557,7 +557,12 @@ function lerConfig(){
 }
 
 function urlServidor(){
- return campo("endpoint").trim().replace(/\/+$/,"")||DEFAULT_URL;
+ let url = campo("endpoint").trim() || DEFAULT_URL;
+
+ url = url.replace(/\/+$/, "");
+ url = url.replace(/\/roteiro$/i, "");
+
+ return url;
 }
 
 function configurar(){

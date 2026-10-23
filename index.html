@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#180e20">
+<title>Frutas Studio AI</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #120c18;
+  --panel: #21172b;
+  --line: #49334f;
+  --pink: #ff5687;
+  --gold: #ffc879;
+  --text: #fff4fa;
+  --muted: #c8b7ce;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, #43213f, var(--bg) 65%);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+header {
+  padding: 23px 17px;
+  border-bottom: 1px solid var(--line);
+  background: #170e20;
+}
+.logo { font-size: 25px; font-weight: 900; letter-spacing: -.8px; }
+.logo span { color: var(--pink); }
+header p { color: var(--muted); margin: 5px 0 0; font-size: 13px; }
+main { max-width: 850px; margin: auto; padding: 16px; }
+.hero {
+  padding: 23px 18px;
+  border: 1px solid #754264;
+  border-radius: 19px;
+  background: linear-gradient(135deg, #592544, #291832);
+  margin-bottom: 18px;
+}
+.tag {
+  display: inline-block;
+  background: #7b3157;
+  color: #ffe0ed;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+h1 { font-size: 29px; line-height: 1.15; margin: 0 0 10px; }
+.hero p { color: #edd4e5; line-height: 1.6; margin: 0; }
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 17px;
+  margin: 16px 0;
+}
+h2 { font-size: 19px; margin: 0 0 13px; }
+label { display: block; color: #e8d7ec; font-size: 13px; margin: 13px 0 7px; }
+input, select, textarea {
+  width: 100%;
+  background: #130d19;
+  border: 1px solid #614766;
+  border-radius: 10px;
+  color: white;
+  padding: 12px;
+  font: inherit;
+}
+textarea { min-height: 100px; resize: vertical; line-height: 1.5; }
+button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 750;
+  cursor: pointer;
+}
+button:focus-visible, input:focus-visible, textarea:focus-visible,
+select:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.primary {
+  width: 100%;
+  margin-top: 15px;
+  color: #2b0d20;
+  background: linear-gradient(100deg, #ff5687, #ffae68);
+}
+.secondary { background: #392540; color: white; border: 1px solid #68466d; }
+.danger { background: #49232f; color: #ffd9e1; border: 1px solid #854257; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+.character {
+  background: #2a1d32;
+  border: 1px solid #4c3553;
+  border-radius: 13px;
+  padding: 12px;
+  min-width: 0;
+}
+.face { font-size: 32px; }
+.character strong { display: block; margin: 5px 0; }
+.character p { color: var(--muted); font-size: 12px; line-height: 1.5; margin: 5px 0 0; }
+.note { font-size: 12px; line-height: 1.6; color: var(--muted); }
+.output {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.65;
+  font-size: 14px;
+  color: #faeaf5;
+}
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.saved-item {
+  border-bottom: 1px solid var(--line);
+  padding: 12px 0;
+}
+.saved-title { font-size: 13px; margin-bottom: 8px; overflow-wrap: anywhere; }
+.status { color: var(--gold); font-size: 12px; margin-top: 9px; min-height: 18px; }
+footer { text-align: center; padding: 24px 15px; color: #b6a2bc; font-size: 12px; }
+@media (min-width: 600px) {
+  .cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  main { padding: 22px; }
+}
+@media (max-width: 380px) {
+  .row { grid-template-columns: 1fr; }
+  h1 { font-size: 25px; }
+  .logo { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">🍓 FRUTAS <span>STUDIO AI</span></div>
+  <p>Seu estúdio de novelas cinematográficas com frutas</p>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="tag">✦ ESTÚDIO CRIATIVO</span>
+    <h1>Histórias deliciosamente dramáticas.</h1>
+    <p>Crie roteiros, organize cenas e prepare prompts para seu universo de frutas em 3D.</p>
+  </section>
+
+  <section class="panel">
+    <h2>🎬 Criador de episódios</h2>
+
+    <label for="series">Nome da série</label>
+    <input id="series" value="Drama de Frutas — O Segredo do Morango">
+
+    <div class="row">
+      <div>
+        <label for="episode">Episódio</label>
+        <select id="episode"></select>
+      </div>
+      <div>
+        <label for="style">Estilo da história</label>
+        <select id="style">
+          <option>Novela brasileira dramática</option>
+          <option>Romance e traição</option>
+          <option>Mistério e suspense</option>
+          <option>Comédia dramática</option>
+          <option>Drama de família</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="idea">O que acontece neste episódio?</label>
+    <textarea id="idea" placeholder="Ex.: Melissa encontra uma mensagem misteriosa no celular de Enzo..."></textarea>
+
+    <label for="location">Cenário principal</label>
+    <select id="location">
+      <option>Uma mansão luxuosa no Brasil</option>
+      <option>Uma cobertura moderna em São Paulo</option>
+      <option>Um restaurante sofisticado</option>
+      <option>Uma praia brasileira ao pôr do sol</option>
+      <option>Uma festa de gala cheia de segredos</option>
+      <option>Uma rua urbana à noite</option>
+    </select>
+
+    <button class="primary" id="generate">✨ Criar roteiro e 3 cenas</button>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+    <p class="note">Cada episódio tem 30 segundos: 3 cenas de 10 segundos. Esta versão gera texto e prompts, não arquivos de vídeo.</p>
+  </section>
+
+  <section class="panel">
+    <h2>🍒 Elenco principal</h2>
+    <div class="cards">
+      <article class="character">
+        <div class="face">🍓</div>
+        <strong>Melissa Morango</strong>
+        <p>Protagonista inteligente, orgulhosa e emocional. Pele vermelha com sementes, cabelo de folhas verdes e vestido vermelho elegante.</p>
+      </article>
+      <article class="character">
+        <div class="face">🍍</div>
+        <strong>Enzo Abacaxi</strong>
+        <p>Charmoso, ambicioso e misterioso. Pele dourada texturizada, coroa de folhas pontudas, terno creme e relógio dourado.</p>
+      </article>
+      <article class="character">
+        <div class="face">🍑</div>
+        <strong>Jade Pêssego</strong>
+        <p>Observadora e fofoqueira. Pele rosada aveludada e roupa lilás sofisticada.</p>
+      </article>
+      <article class="character">
+        <div class="face">🍌</div>
+        <strong>Bianca Banana</strong>
+        <p>Calculista e competitiva. Roupa de gala preta e dourada, postura confiante e presença marcante.</p>
+      </article>
+      <article class="character">
+        <div class="face">🍉</div>
+        <strong>Kauã Melancia</strong>
+        <p>Leal e desconfiado. Roupa urbana escura, corrente prateada e olhar atento.</p>
+      </article>
+      <article class="character">
+        <div class="face">🍋</div>
+        <strong>Léo Limão</strong>
+        <p>Engraçado e dramático. Jaqueta turquesa, celular sempre na mão e dificuldade para guardar segredos.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="panel" id="resultPanel">
+    <h2>📝 Roteiro e prompts</h2>
+    <div id="result" class="output">Seu roteiro aparecerá aqui. Escolha um episódio, descreva sua ideia e toque em “Criar roteiro e 3 cenas”.</div>
+    <div class="actions">
+      <button class="secondary" id="copy">📋 Copiar roteiro</button>
+      <button class="secondary" id="save">💾 Salvar roteiro</button>
+    </div>
+    <div class="status" id="resultStatus" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="panel">
+    <h2>📚 Roteiros salvos</h2>
+    <p class="note">Os roteiros ficam guardados no armazenamento deste navegador neste dispositivo.</p>
+    <div id="savedList"></div>
+  </section>
+</main>
+
+<footer>Frutas Studio AI · Versão inicial 🍓<br>Projeto em desenvolvimento</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  const $ = function (id) {
+    return document.getElementById(id);
+  };
+
+  const STORAGE_KEY = "frutasStudioAI_saved_v1";
+  let currentScript = "";
+
+  const characters = [
+    "Melissa Morango: personagem feminina antropomórfica, pele vermelha com sementes de morango, cabelo de folhas verdes e vestido vermelho elegante.",
+    "Enzo Abacaxi: personagem masculina antropomórfica, pele dourada com textura de abacaxi, coroa de folhas verdes pontudas, terno creme e relógio dourado.",
+    "Jade Pêssego: personagem feminina antropomórfica, pele rosada aveludada e roupa lilás sofisticada.",
+    "Bianca Banana: personagem feminina antropomórfica, roupa de gala preta e dourada, postura calculista e competitiva.",
+    "Kauã Melancia: personagem masculina antropomórfica, roupa urbana escura e corrente prateada.",
+    "Léo Limão: personagem masculina antropomórfica, jaqueta turquesa e celular sempre na mão."
+  ].join("\n");
+
+  for (let i = 1; i <= 30; i++) {
+    const option = document.createElement("option");
+    option.value = String(i);
+    option.textContent = "Episódio " + String(i).padStart(2, "0");
+    $("episode").appendChild(option);
+  }
+
+  function readSaved() {
+    try {
+      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      return [];
+    }
+  }
+
+  function setStatus(message, target) {
+    $(target || "status").textContent = message;
+  }
+
+  function makeScene(title, time, action, location, number) {
+    return (
+      "CENA " + number + " — " + title + " (" + time + ")\n" +
+      "AÇÃO: " + action + "\n" +
+      "PROMPT VISUAL: Animação 3D cinematográfica sofisticada, " +
+      location + ". Frutas antropomórficas com anatomia estilizada, " +
+      "roupas detalhadas, expressões faciais legíveis, iluminação de novela, " +
+      "enquadramento vertical 9:16, movimento de câmera fluido, materiais " +
+      "realistas e profundidade de campo. Manter rigorosamente o mesmo " +
+      "design dos personagens em todas as cenas. Sem legendas embutidas.\n" +
+      "ÁUDIO: Vozes em português brasileiro natural, diálogo expressivo, " +
+      "trilha dramática original e efeitos sonoros sincronizados.\n" +
+      "DURAÇÃO: 10 segundos.\n"
+    );
+  }
+
+  function generateScript() {
+    const series = $("series").value.trim() || "Drama de Frutas";
+    const episode = Number($("episode").value);
+    const style = $("style").value;
+    const location = $("location").value;
+    const idea = $("idea").value.trim() ||
+      "Melissa percebe que Enzo está escondendo um segredo sobre Bianca.";
+
+    const scene1 =
+      "A história começa com " + idea +
+      " A câmera revela o ambiente e mostra Melissa percebendo um detalhe estranho.";
+    const scene2 =
+      "Melissa confronta Enzo. Ele tenta disfarçar o nervosismo, enquanto " +
+      "uma pista inesperada sugere que Bianca está envolvida. Use diálogos " +
+      "curtos, naturais e cheios de tensão em português brasileiro.";
+    const scene3 =
+      "Quando Melissa pensa ter entendido tudo, chega uma mensagem ou surge " +
+      "uma testemunha inesperada. Termine com uma revelação surpreendente, " +
+      "uma reação emocional forte e um gancho para o próximo episódio.";
+
+    currentScript =
+      series + "\n" +
+      "EPISÓDIO " + String(episode).padStart(2, "0") + " DE 30\n" +
+      "ESTILO: " + style + "\n" +
+      "CENÁRIO: " + location + "\n\n" +
+      "IDEIA CENTRAL:\n" + idea + "\n\n" +
+      "ELENCO E CONTINUIDADE VISUAL:\n" + characters + "\n\n" +
+      "DIREÇÃO GERAL:\n" +
+      "Novela brasileira com personagens adultos estilizados em 3D, " +
+      "drama emocional, diálogos naturais em português brasileiro, " +
+      "cinematografia sofisticada, iluminação detalhada e continuidade " +
+      "visual entre as cenas. Cada cena deve durar aproximadamente 10 segundos.\n\n" +
+      makeScene("A DESCOBERTA", "0–10 s", scene1, location, 1) + "\n" +
+      makeScene("O CONFRONTO", "10–20 s", scene2, location, 2) + "\n" +
+      makeScene("O SEGREDO", "20–30 s", scene3, location, 3) + "\n" +
+      "GANCHO PARA O PRÓXIMO EPISÓDIO:\n" +
+      "A revelação final deixa uma pergunta importante sem resposta.\n\n" +
+      "NOTA: Este aplicativo prepara o roteiro e os prompts em texto. " +
+      "A geração de vídeos exige uma ferramenta de vídeo com IA separada.";
+
+    $("result").textContent = currentScript;
+    setStatus("Roteiro criado! Você já pode copiar ou salvar.");
+    $("resultPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  async function copyScript() {
+    if (!currentScript) {
+      setStatus("Crie um roteiro primeiro.", "resultStatus");
+      return;
+    }
+
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(currentScript);
+      } else {
+        const area = document.createElement("textarea");
+        area.value = currentScript;
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.focus();
+        area.select();
+        const copied = document.execCommand("copy");
+        area.remove();
+        if (!copied) throw new Error("Falha ao copiar");
+      }
+      setStatus("Roteiro copiado para a área de transferência.", "resultStatus");
+    } catch (error) {
+      setStatus("Não foi possível copiar automaticamente. Selecione e copie o texto do roteiro.", "resultStatus");
+    }
+  }
+
+  function renderSaved() {
+    const container = $("savedList");
+    container.replaceChildren();
+    const items = readSaved();
+
+    if (items.length === 0) {
+      const empty = document.createElement("p");
+      empty.className = "note";
+      empty.textContent = "Nenhum roteiro salvo ainda.";
+      container.appendChild(empty);
+      return;
+    }
+
+    items.forEach(function (item, index) {
+      const wrapper = document.createElement("div");
+      wrapper.className = "saved-item";
+
+      const title = document.createElement("div");
+      title.className = "saved-title";
+      title.textContent = item.title + " · " + item.date;
+
+      const openButton = document.createElement("button");
+      openButton.className = "secondary";
+      openButton.textContent = "Abrir";
+      openButton.addEventListener("click", function () {
+        currentScript = item.text;
+        $("result").textContent = currentScript;
+        setStatus("Roteiro carregado.", "resultStatus");
+        $("resultPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      const deleteButton = document.createElement("button");
+      deleteButton.className = "danger";
+      deleteButton.textContent = "Excluir";
+      deleteButton.style.marginLeft = "7px";
+      deleteButton.addEventListener("click", function () {
+        const updated = readSaved();
+        updated.splice(index, 1);
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+          renderSaved();
+          setStatus("Roteiro excluído.");
+        } catch (error) {
+          setStatus("Não foi possível atualizar os roteiros salvos.");
+        }
+      });
+
+      wrapper.appendChild(title);
+      wrapper.appendChild(openButton);
+      wrapper.appendChild(deleteButton);
+      container.appendChild(wrapper);
+    });
+  }
+
+  function saveScript() {
+    if (!currentScript) {
+      setStatus("Crie um roteiro antes de salvar.", "resultStatus");
+      return;
+    }
+
+    const items = readSaved();
+    const episode = $("episode").value;
+    const title = ($("series").value.trim() || "Drama de Frutas") +
+      " — Episódio " + String(episode).padStart(2, "0");
+
+    items.unshift({
+      title: title,
+      episode: episode,
+      date: new Date().toLocaleDateString("pt-BR"),
+      text: currentScript
+    });
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      renderSaved();
+      setStatus("Roteiro salvo neste dispositivo.", "resultStatus");
+    } catch (error) {
+      setStatus("O armazenamento está cheio ou indisponível. Copie o roteiro para não perdê-lo.", "resultStatus");
+    }
+  }
+
+  $("generate").addEventListener("click", generateScript);
+  $("copy").addEventListener("click", copyScript);
+  $("save").addEventListener("click", saveScript);
+
+  renderSaved();
+})();
+</script>
+</body>
+                                                            </html>
+                                                            

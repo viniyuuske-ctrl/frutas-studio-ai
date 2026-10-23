@@ -1,64 +1,129 @@
-</body>
-<script>
-/*
- FRUTINHAS AI 4.0
- Extensão para o Frutas Studio AI 3.0.
- Preserva o código e os episódios anteriores.
-*/
-(function(){
-"use strict";
 
-const el=id=>document.getElementById(id);
-const CONFIG_KEY="frutinhas_4_roteirista_config";
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frutinhas AI 4.0</title>
+<style>
+:root{--bg:#120c1b;--card:#261830;--line:#674469;--pink:#ff73b5;--muted:#d7bddb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
+header{background:linear-gradient(135deg,#35142e,#24112e);padding:28px 18px;text-align:center}
+h1{color:var(--pink);font-size:28px;margin:0 0 10px}
+h2{font-size:22px;margin:0 0 15px}
+h3{color:var(--pink)}
+p{line-height:1.5}
+main{max-width:850px;margin:auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:19px;margin-bottom:18px}
+label{display:block;margin:14px 0 7px;font-weight:bold}
+input,select,textarea{width:100%;background:#160e20;color:white;border:1px solid #88628b;border-radius:11px;padding:13px;font-size:16px}
+textarea{min-height:105px;resize:vertical}
+button{border:0;border-radius:12px;background:var(--pink);color:#270e24;font-size:15px;font-weight:bold;padding:13px;cursor:pointer;margin:5px 0}
+button:disabled{opacity:.5}
+.full{width:100%}
+.secondary{background:#493354;color:white}
+.danger{background:#843850;color:white}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.scene{background:#190f23;border:1px solid #65416b;border-radius:14px;padding:16px;margin:14px 0}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.tag{display:inline-block;background:#6d315d;border-radius:30px;padding:7px 12px;font-size:12px;margin:3px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font-family:inherit;line-height:1.5}
+.saved{padding:12px;border-bottom:1px solid #614465}
+.status{padding:12px;background:#35253c;border-radius:10px;margin-top:12px;white-space:pre-wrap;overflow-wrap:anywhere}
+details{margin-top:15px}
+summary{cursor:pointer;color:#ffb5dc;font-weight:bold}
+@media(max-width:400px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<h1>🍓 FRUTINHAS AI 4.0</h1>
+<p>Seu estúdio de novelas, roteiros e personagens emocionais</p>
+<span class="tag">🎬 Cenas</span>
+<span class="tag">❤️ Emoções</span>
+<span class="tag">🎙️ Vozes</span>
+<span class="tag">📚 Episódios</span>
+</header>
 
-const style=document.createElement("style");
-style.textContent=`
-.fr4-panel{
-background:linear-gradient(145deg,#39203e,#23162f);
-border:1px solid #a45c91;
-border-radius:18px;
-padding:18px;
-margin-bottom:18px
-}
-.fr4-panel h2{color:#ff91c9}
-.fr4-panel textarea{min-height:100px}
-.fr4-panel button{width:100%}
-.fr4-panel .fr4-note{
-font-size:13px;
-color:#e4c9e0;
-line-height:1.5
-}
-.fr4-panel details{margin-top:15px}
-.fr4-panel summary{
-cursor:pointer;
-font-weight:bold;
-color:#ffb4d9
-}
-.fr4-status{
-white-space:pre-wrap;
-overflow-wrap:anywhere;
-background:#170f21;
-padding:12px;
-border-radius:10px;
-margin-top:12px
-}
-`;
-document.head.appendChild(style);
+<main>
+<section class="card">
+<h2>🎬 Criador de episódios</h2>
 
-const panel=document.createElement("section");
-panel.className="fr4-panel";
+<label>Nome da série</label>
+<input id="serie" value="O Segredo do Morango">
 
-panel.innerHTML=`
+<label>Episódio</label>
+<select id="episodio"></select>
+
+<label>Estilo visual</label>
+<select id="estilo">
+<option>Realista cinematográfico</option>
+<option>Animação 3D</option>
+<option>Novela de frutas</option>
+<option>Anime</option>
+<option>Stop motion</option>
+<option>Ação realista</option>
+<option>Fantasia mágica</option>
+<option>Comédia infantil</option>
+</select>
+
+<label>Formato</label>
+<select id="formato">
+<option value="9:16">9:16 — TikTok / Shorts</option>
+<option value="16:9">16:9 — YouTube</option>
+<option value="1:1">1:1 — Quadrado</option>
+</select>
+
+<div class="grid">
+<div>
+<label>Duração por cena</label>
+<select id="duracao">
+<option value="15">15 segundos</option>
+<option value="10">10 segundos</option>
+<option value="5">5 segundos</option>
+</select>
+</div>
+<div>
+<label>Quantidade de cenas</label>
+<select id="quantidade">
+<option value="3">3 cenas</option>
+<option value="6">6 cenas</option>
+<option value="12">12 cenas</option>
+<option value="18">18 cenas</option>
+</select>
+</div>
+</div>
+
+<label>Personagens</label>
+<textarea id="personagens">Melissa Morango: sensível, corajosa, observadora e emotiva.
+Enzo Abacaxi: carismático, misterioso e orgulhoso; esconde culpa.
+Jade Pêssego: elegante, enigmática, aparentemente fria e insegura por dentro.</textarea>
+
+<label>Ideia do episódio</label>
+<textarea id="ideia">Melissa Morango descobre que Enzo Abacaxi está escondendo um segredo.</textarea>
+
+<label>Tom da história</label>
+<select id="tom">
+<option>Suspense e romance</option>
+<option>Drama intenso</option>
+<option>Comédia</option>
+<option>Aventura</option>
+<option>Terror leve</option>
+<option>Educacional infantil</option>
+</select>
+
+<button class="full" id="btnLocal">✨ Criar roteiro básico</button>
+<button class="full secondary" id="btnSalvar">💾 Salvar episódio</button>
+</section>
+
+<section class="card">
 <h2>🧠 Roteirista Emocional 4.0</h2>
+<p>Crie diálogos com sentimentos, pausas, hesitações, gestos e continuidade.</p>
 
-<p>
-Crie histórias com diálogos naturais,
-sentimentos humanos, pausas dramáticas
-e continuidade entre episódios.
-</p>
-
-<label>Emoção principal</label>
-<select id="fr4-emocao">
+<label>Emoção dominante</label>
+<select id="emocao">
 <option>Ciúme e desconfiança</option>
 <option>Amor e saudade</option>
 <option>Medo e suspense</option>
@@ -68,422 +133,585 @@ e continuidade entre episódios.
 <option>Tristeza e despedida</option>
 </select>
 
-<label>O que aconteceu no episódio anterior?</label>
-<textarea id="fr4-anterior"
-placeholder="Exemplo: Melissa viu Enzo escondendo uma mensagem de Jade."></textarea>
+<label>Resumo do episódio anterior</label>
+<textarea id="anterior" placeholder="O que aconteceu antes?"></textarea>
 
-<label>Instruções especiais</label>
-<textarea id="fr4-extra"
-placeholder="Exemplo: Melissa tenta não chorar. Enzo fala baixo e evita olhar nos olhos dela."></textarea>
+<label>Direção especial</label>
+<textarea id="extra" placeholder="Exemplo: Melissa tenta não chorar. Enzo evita olhar nos olhos dela."></textarea>
 
-<button type="button" id="fr4-gerar">
-❤️ Gerar roteiro humanizado com IA
-</button>
+<button class="full" id="btnIA">❤️ Gerar roteiro humanizado com IA</button>
+<button class="full secondary" id="btnPrompt">📋 Copiar instruções para ChatGPT</button>
 
-<button type="button" class="secondary"
-id="fr4-copiar">
-📋 Copiar pedido para ChatGPT
-</button>
-
-<div class="fr4-status" id="fr4-status">
-O criador original continua disponível.
-Para gerar com IA automaticamente,
-configure um servidor de IA.
-</div>
+<div class="status" id="status">O aplicativo está pronto. Para usar geração automática por IA, conecte um servidor.</div>
 
 <details>
 <summary>⚙️ Configurar conexão com IA</summary>
-
 <label>Endereço HTTPS do servidor</label>
-<input type="url" id="fr4-url"
-placeholder="https://meu-worker.workers.dev">
-
-<label>PIN de acesso (se necessário)</label>
-<input type="password" id="fr4-pin"
-autocomplete="off">
-
-<button type="button" class="secondary"
-id="fr4-config">
-Salvar conexão
-</button>
-
-<p class="fr4-note">
-Não coloque sua chave do Hugging Face
-ou de qualquer modelo neste HTML.
-A chave deve ficar protegida no servidor.
-</p>
+<input id="endpoint" type="url" placeholder="https://meu-worker.workers.dev">
+<label>PIN de acesso</label>
+<input id="pin" type="password" autocomplete="off">
+<button class="full secondary" id="btnConfig">Salvar conexão</button>
+<p class="small muted">Nunca coloque uma chave de API secreta no código público do GitHub.</p>
 </details>
+</section>
 
-<p class="fr4-note">
-As vozes, efeitos, estilos, formatos,
-episódios, prompts e backups da versão
-anterior continuam disponíveis.
-</p>
-`;
+<section class="card">
+<h2>📖 Roteiro do episódio</h2>
+<p class="small muted">O criador básico usa regras locais. O roteirista com IA precisa de um modelo externo.</p>
+<div id="resultado">Crie um episódio para visualizar as cenas.</div>
+<div class="grid">
+<button id="btnCopiar">📋 Copiar roteiro</button>
+<button class="secondary" id="btnExportar">📦 Exportar JSON</button>
+</div>
+</section>
 
-const main=document.querySelector("main");
-const primeiraSecao=main.querySelector("section");
+<section class="card">
+<h2>🎙️ Estúdio de vozes</h2>
+<label>Idioma</label>
+<select id="idioma">
+<option value="pt-BR">Português brasileiro</option>
+<option value="ja-JP">Japonês</option>
+<option value="en-US">Inglês</option>
+</select>
+<label>Voz disponível no aparelho</label>
+<select id="vozSelecionada"><option value="">Voz padrão</option></select>
+<label>Velocidade</label>
+<input type="range" id="velocidade" min="0.6" max="1.5" step="0.1" value="1">
+<label>Texto para narrar</label>
+<textarea id="textoVoz">Melissa: Enzo... o que você está escondendo de mim?</textarea>
+<button class="full" id="btnFalar">🔊 Ouvir voz</button>
+<button class="full secondary" id="btnParar">⏹️ Parar voz</button>
+<p class="small muted">As vozes são do navegador ou Android. Ainda não são vozes neurais fixas por personagem.</p>
+</section>
 
-primeiraSecao.insertAdjacentElement(
-"afterend",panel
-);
+<section class="card">
+<h2>🎵 Efeitos sonoros</h2>
+<div class="grid">
+<button data-efeito="suspense">😨 Suspense</button>
+<button data-efeito="notificacao">📱 Notificação</button>
+<button data-efeito="impacto">💥 Impacto</button>
+<button data-efeito="alegria">🎉 Alegria</button>
+</div>
+</section>
 
-const titulo=document.querySelector("header h1");
-if(titulo){
-titulo.textContent="🍓 FRUTINHAS AI 4.0";
+<section class="card">
+<h2>🎥 Frutinhas Media Engine</h2>
+<p>Prepare prompts para ferramentas externas de vídeo.</p>
+<button class="full" id="btnPrompts">🎬 Copiar prompts de vídeo</button>
+<button class="full secondary" id="btnProjeto">📦 Exportar projeto</button>
+<div class="status">A geração de vídeo MP4 ainda precisa de um serviço externo. Esta versão prepara os prompts.</div>
+</section>
+
+<section class="card">
+<h2>📚 Meus episódios salvos</h2>
+<div id="salvos">Nenhum episódio salvo.</div>
+<button class="full secondary" id="btnBackup">⬇️ Fazer backup</button>
+<label>Restaurar backup JSON</label>
+<input type="file" id="arquivoBackup" accept=".json,application/json">
+</section>
+
+<section class="card">
+<h2>ℹ️ Sobre o aplicativo</h2>
+<p>Seus episódios são guardados no navegador. Faça backups regularmente, especialmente antes de limpar dados do celular.</p>
+</section>
+</main>
+
+<script>
+"use strict";
+
+const $=id=>document.getElementById(id);
+const CHAVE="frutas_studio_v3";
+const CONFIG="frutinhas_ai_4_config";
+let projeto=null;
+let audioCtx=null;
+
+for(let i=1;i<=30;i++){
+const op=document.createElement("option");
+op.value=String(i);
+op.textContent="Episódio "+String(i).padStart(2,"0");
+$("episodio").appendChild(op);
 }
 
-function configuracao(){
+function campo(id){return $(id).value}
+
+function lerSalvos(){
 try{
-return JSON.parse(
-localStorage.getItem(CONFIG_KEY)||"{}"
-);
+const d=JSON.parse(localStorage.getItem(CHAVE)||"{}");
+return d&&typeof d==="object"&&!Array.isArray(d)?d:{};
+}catch{return {}}
+}
+
+function gravarSalvos(d){
+try{
+localStorage.setItem(CHAVE,JSON.stringify(d));
+return true;
 }catch{
-return {};
+alert("Não foi possível salvar. Verifique o espaço disponível.");
+return false;
 }
 }
 
-const config=configuracao();
-el("fr4-url").value=config.url||"";
-el("fr4-pin").value=config.pin||"";
+function baixar(nome,conteudo,tipo){
+const url=URL.createObjectURL(new Blob([conteudo],{type:tipo}));
+const a=document.createElement("a");
+a.href=url;
+a.download=nome;
+document.body.appendChild(a);
+a.click();
+a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),3000);
+}
 
 function dados(){
 return {
-serie:el("serie").value.trim(),
-episodio:Number(el("episodio").value),
-ideia:el("ideia").value.trim(),
-personagens:el("personagens").value.trim(),
-estilo:el("estilo").value,
-formato:el("formato").value,
-tom:el("tom").value,
-duracao:Number(el("duracao").value),
-quantidade:Number(el("quantidade").value),
-idioma:el("idioma").value,
-emocao:el("fr4-emocao").value,
-anterior:el("fr4-anterior").value.trim(),
-extra:el("fr4-extra").value.trim()
+serie:campo("serie"),
+episodio:Number(campo("episodio")),
+ideia:campo("ideia"),
+personagens:campo("personagens"),
+estilo:campo("estilo"),
+formato:campo("formato"),
+tom:campo("tom"),
+duracao:Number(campo("duracao")),
+quantidade:Number(campo("quantidade")),
+idioma:campo("idioma"),
+emocao:campo("emocao"),
+anterior:campo("anterior"),
+extra:campo("extra")
 };
 }
 
-function criarPrompt(d){
-return `
-Você é um roteirista brasileiro
-especializado em novelas e animações
-com personagens antropomórficos.
-
-Escreva uma história ORIGINAL, inteligente,
-emocionante e cinematográfica.
-
-DADOS DA PRODUÇÃO:
-Série: ${d.serie}
-Episódio: ${d.episodio}
-Ideia: ${d.ideia}
-Personagens: ${d.personagens}
-Estilo: ${d.estilo}
-Formato: ${d.formato}
-Tom: ${d.tom}
-Emoção dominante: ${d.emocao}
-Número de cenas: ${d.quantidade}
-Segundos por cena: ${d.duracao}
-Idioma: ${d.idioma}
-
-EPISÓDIO ANTERIOR:
-${d.anterior||"Não informado"}
-
-DIREÇÃO ESPECIAL:
-${d.extra||"Nenhuma"}
-
-REGRAS OBRIGATÓRIAS:
-
-1. Personagens devem sentir e agir
-como pessoas de verdade.
-
-2. Demonstre medo, amor, culpa, ciúme,
-insegurança, vergonha e saudade
-quando fizer sentido para a história.
-
-3. Evite diálogos robóticos e frases
-genéricas repetidas.
-
-4. Use português brasileiro natural.
-
-5. Use vírgulas, hesitações,
-frases interrompidas e subtexto.
-
-6. Inclua pausas expressivas de
-0,5 a 3 segundos quando necessário.
-
-7. Descreva respiração, olhares,
-movimentos das mãos e expressões faciais.
-
-8. O silêncio também conta uma história.
-
-9. Cada personagem deve manter sua
-personalidade e seus segredos.
-
-10. Preserve a continuidade dos episódios.
-
-11. Não explique tudo em voz alta.
-Mostre sentimentos pelas ações.
-
-12. Respeite a duração das cenas.
-Não escreva diálogos longos demais
-para o tempo disponível.
-
-13. Crie tensão crescente e um
-gancho emocionante na última cena.
-
-14. Os prompts de vídeo devem manter
-a aparência dos personagens consistente.
-
-15. Não inclua legendas ou letras
-nas imagens geradas.
-
-FORMATO DE RESPOSTA:
-Responda SOMENTE com um objeto JSON válido.
-Não use markdown nem blocos de código.
-
-O JSON deve ter esta estrutura:
-
-{
-  "cenas": [
-    {
-      "numero": 1,
-      "acao": "Ações, gestos, emoções e pausas",
-      "dialogo": "Nome: fala natural...",
-      "som": "Trilha e efeitos sonoros",
-      "promptVideo": "Descrição cinematográfica",
-      "promptAudio": "Direção de voz e emoções"
-    }
-  ]
-}
-
-Gere exatamente ${d.quantidade} cenas,
-numeradas de 1 a ${d.quantidade}.
-
-Cada cena deve ter aproximadamente
-${d.duracao} segundos.
-
-Preencha todos os campos com
-conteúdo específico, não genérico.
-`;
-}
-
-function status(texto){
-el("fr4-status").textContent=texto;
-}
-
-el("fr4-config").onclick=function(){
-const url=el("fr4-url").value.trim()
-.replace(/\/$/,"");
-
-if(url&&!/^https:\/\//i.test(url)){
-alert("Use um endereço HTTPS.");
-return;
-}
-
-try{
-localStorage.setItem(
-CONFIG_KEY,
-JSON.stringify({
-url,
-pin:el("fr4-pin").value
-})
-);
-status("Configuração salva neste navegador.");
-}catch(e){
-status("Não foi possível salvar a configuração.");
-}
-};
-
-el("fr4-copiar").onclick=function(){
+function gerarLocal(){
 const d=dados();
+if(!d.ideia.trim()){alert("Escreva a ideia.");return}
 
-if(!d.ideia){
-alert("Escreva a ideia da história.");
-return;
-}
-
-copiarTexto(criarPrompt(d));
-};
-
-function extrairCenas(resposta){
-let conteudo=resposta;
-
-if(typeof conteudo==="string"){
-let texto=conteudo.trim();
-
-texto=texto.replace(
-/^```(?:json)?\s*/i,""
-).replace(/```\s*$/,"");
-
-conteudo=JSON.parse(texto);
-}
-
-if(conteudo&&
-typeof conteudo==="object"&&
-typeof conteudo.text==="string"){
-return extrairCenas(conteudo.text);
-}
-
-if(!conteudo||
-!Array.isArray(conteudo.cenas)){
-throw new Error(
-"A IA não devolveu uma lista de cenas válida."
-);
-}
-
-return conteudo.cenas;
-}
-
-function validarCenas(cenas,d){
-if(cenas.length!==d.quantidade){
-throw new Error(
-"A IA gerou "+cenas.length+
-" cenas, mas foram pedidas "+
-d.quantidade+"."
-);
-}
-
-return cenas.map((c,i)=>{
-if(!c||typeof c!=="object"){
-throw new Error("Cena inválida.");
-}
-
-const campos=[
-"acao","dialogo","som",
-"promptVideo","promptAudio"
+const acoes=[
+"Apresentação do conflito. Um olhar revela que algo está errado.",
+"Uma pista inesperada aparece e provoca desconforto.",
+"Os personagens tentam conversar, mas evitam a verdade.",
+"Uma informação muda o rumo da história.",
+"Alguém esconde um sentimento e desvia o olhar.",
+"Uma revelação provoca silêncio e surpresa.",
+"Um personagem precisa tomar uma decisão difícil.",
+"A tensão aumenta depois de uma nova descoberta.",
+"Uma discussão expõe emoções escondidas.",
+"Um detalhe muda a interpretação dos acontecimentos.",
+"Parece que tudo será resolvido.",
+"Uma revelação final cria um novo mistério."
 ];
 
-for(const campo of campos){
-if(typeof c[campo]!=="string"||
-!c[campo].trim()){
-throw new Error(
-"Faltou o campo "+campo+
-" na cena "+(i+1)+"."
-);
-}
-}
+const falas=[
+"Melissa: Enzo... tem uma coisa que eu preciso te perguntar.",
+"Enzo: Mel, eu... não sei nem por onde começar.",
+"Melissa: Você acha mesmo que eu não percebi?",
+"Enzo: Não é tão simples assim...",
+"Melissa: Então olha nos meus olhos e me explica.",
+"Enzo: Eu queria te contar. Só não sabia como.",
+"Melissa: [pausa de 1 segundo] Você teve tempo, Enzo.",
+"Enzo: Eu sei... e me arrependo.",
+"Jade: Talvez vocês estejam fazendo a pergunta errada.",
+"Melissa: Jade? O que você sabe sobre isso?",
+"Enzo: Espera... você não devia estar aqui.",
+"Melissa: [silêncio de 2 segundos] Então era verdade..."
+];
 
-return {
+const sons=[
+"Ambiente discreto e música de suspense.",
+"Notificação distante e respiração tensa.",
+"Silêncio dramático e batida grave.",
+"Trilha emocional crescente."
+];
+
+const cenas=[];
+
+for(let i=0;i<d.quantidade;i++){
+const acao=acoes[i%acoes.length];
+const dialogo=falas[i%falas.length];
+const som=sons[i%sons.length];
+
+const promptVideo=
+"Vídeo "+d.estilo+
+", proporção "+d.formato+
+", "+d.duracao+" segundos. "+
+"Personagens: "+d.personagens+
+". Contexto: "+d.ideia+
+". Ação: "+acao+
+". Emoção: "+d.emocao+
+". Expressões faciais humanas, gestos naturais, "+
+"iluminação cinematográfica e continuidade visual. "+
+"Não inserir letras ou legendas na imagem.";
+
+cenas.push({
 numero:i+1,
 duracao:d.duracao,
-acao:c.acao,
-dialogo:c.dialogo,
-som:c.som,
-promptVideo:c.promptVideo,
-promptAudio:c.promptAudio
-};
+acao,
+dialogo,
+som,
+promptVideo,
+promptAudio:"Voz natural em português brasileiro. "+dialogo+". Som: "+som
 });
 }
 
-el("fr4-gerar").onclick=async function(){
-const d=dados();
-
-if(!d.ideia){
-alert("Escreva a ideia do episódio.");
-return;
-}
-
-const config=configuracao();
-
-if(!config.url){
-status(
-"Ainda não existe um servidor de IA conectado.\n"+
-"Use o botão Copiar pedido para ChatGPT "+
-"ou configure o servidor primeiro.\n"+
-"O criador original continua funcionando."
-);
-return;
-}
-
-const botao=el("fr4-gerar");
-botao.disabled=true;
-status("🧠 A IA está escrevendo seu roteiro...");
-
-try{
-const resposta=await fetch(
-config.url+"/generate",{
-method:"POST",
-headers:{
-"Content-Type":"application/json",
-"X-Studio-Pin":config.pin||""
-},
-body:JSON.stringify({
-prompt:criarPrompt(d)
-})
-}
-);
-
-const texto=await resposta.text();
-
-let resultado;
-
-try{
-resultado=JSON.parse(texto);
-}catch{
-throw new Error(
-"O servidor não devolveu JSON válido."
-);
-}
-
-if(!resposta.ok){
-throw new Error(
-resultado.error||
-"Erro HTTP "+resposta.status
-);
-}
-
-const cenas=validarCenas(
-extrairCenas(resultado),d
-);
-
-/*
- Mantém a mesma estrutura de projeto
- da versão 3.0 para preservar
- visualização, salvamento e exportação.
-*/
 projeto={
 versao:4,
-serie:d.serie,
-episodio:d.episodio,
-ideia:d.ideia,
-personagens:d.personagens,
-estilo:d.estilo,
-formato:d.formato,
-tom:d.tom,
-duracao:d.duracao,
-idioma:d.idioma,
-emocao:d.emocao,
-anterior:d.anterior,
-instrucoes:d.extra,
-cenas
+...d,
+cenas,
+tipoGeracao:"roteiro básico local"
 };
 
 mostrarProjeto();
-
-status(
-"❤️ Roteiro recebido!\n"+
-"Confira as cenas e toque no botão "+
-"Salvar episódio do criador original."
-);
-
-el("resultado").scrollIntoView({
-behavior:"smooth",
-block:"start"
-});
-
-}catch(e){
-status(
-"Não foi possível gerar com IA:\n"+
-e.message+
-"\n\nO aplicativo original continua disponível."
-);
-}finally{
-botao.disabled=false;
+$("status").textContent=
+"Roteiro básico criado. Para histórias realmente originais e humanizadas, conecte a IA.";
 }
-};
 
-})();
-</script>
-</html>
+function mostrarProjeto(){
+if(!projeto)return;
+
+const area=$("resultado");
+area.replaceChildren();
+
+const titulo=document.createElement("h3");
+titulo.textContent=projeto.serie+" — Episódio "+projeto.episodio;
+area.appendChild(titulo);
+
+const info=document.createElement("p");
+info.textContent=projeto.cenas.length+" cenas | "+
+projeto.cenas.reduce((s,c)=>s+Number(c.duracao||0),0)+
+" segundos | "+projeto.estilo;
+area.appendChild(info);
+
+projeto.cenas.forEach(c=>{
+const div=document.createElement("div");
+div.className="scene";
+
+const h=document.createElement("h3");
+h.textContent="Cena "+c.numero;
+div.appendChild(h);
+
+const p=document.createElement("pre");
+p.textContent=
+"AÇÃO:\n"+c.acao+
+"\n\nDIÁLOGO:\n"+c.dialogo+
+"\n\nSOM:\n"+c.som+
+"\n\nPROMPT DE VÍDEO:\n"+c.promptVideo+
+"\n\nDIREÇÃO DE ÁUDIO:\n"+(c.promptAudio||"");
+div.appendChild(p);
+
+const b=document.createElement("button");
+b.className="secondary full";
+b.textContent="🔊 Ouvir diálogo";
+b.onclick=()=>{
+$("textoVoz").value=c.dialogo;
+falar();
+};
+div.appendChild(b);
+area.appendChild(div);
+});
+}
+
+function textoRoteiro(){
+if(!projeto)return "";
+return [
+projeto.serie,
+"Episódio "+projeto.episodio,
+"Ideia: "+projeto.ideia,
+"Estilo: "+projeto.estilo,
+...projeto.cenas.map(c=>
+"\nCENA "+c.numero+
+"\nAÇÃO: "+c.acao+
+"\nDIÁLOGO: "+c.dialogo+
+"\nSOM: "+c.som+
+"\nVÍDEO: "+c.promptVideo+
+"\nÁUDIO: "+(c.promptAudio||"")
+)
+].join("\n");
+}
+
+async function copiarTexto(texto){
+try{
+await navigator.clipboard.writeText(texto);
+alert("Copiado!");
+}catch{
+const t=document.createElement("textarea");
+t.value=texto;
+document.body.appendChild(t);
+t.select();
+const ok=document.execCommand("copy");
+t.remove();
+alert(ok?"Copiado!":"Não foi possível copiar automaticamente.");
+}
+}
+
+function salvar(){
+if(!projeto){alert("Crie um episódio primeiro.");return}
+const d=lerSalvos();
+d[projeto.serie+"::"+projeto.episodio]=projeto;
+if(gravarSalvos(d)){
+listarSalvos();
+alert("Episódio salvo!");
+}
+}
+
+function listarSalvos(){
+const area=$("salvos");
+area.replaceChildren();
+const d=lerSalvos();
+const chaves=Object.keys(d);
+
+if(!chaves.length){
+area.textContent="Nenhum episódio salvo.";
+return;
+}
+
+chaves.forEach(chave=>{
+const p=d[chave];
+const div=document.createElement("div");
+div.className="saved";
+
+const titulo=document.createElement("p");
+titulo.textContent=(p.serie||"Série")+" — Episódio "+p.episodio;
+div.appendChild(titulo);
+
+const abrir=document.createElement("button");
+abrir.textContent="Abrir";
+abrir.onclick=()=>{
+projeto=lerSalvos()[chave];
+if(!projeto)return;
+
+for(const id of [
+"serie","episodio","ideia","personagens",
+"estilo","formato","tom","duracao",
+"quantidade","idioma","emocao","anterior","extra"
+]){
+if(projeto[id]!==undefined){
+$(id).value=String(projeto[id]);
+}
+}
+$("quantidade").value=String(projeto.cenas.length);
+mostrarProjeto();
+window.scrollTo({top:0,behavior:"smooth"});
+};
+div.appendChild(abrir);
+
+const apagar=document.createElement("button");
+apagar.className="danger";
+apagar.textContent="Excluir";
+apagar.onclick=()=>{
+if(!confirm("Excluir este episódio?"))return;
+const atual=lerSalvos();
+delete atual[chave];
+gravarSalvos(atual);
+listarSalvos();
+};
+div.appendChild(apagar);
+area.appendChild(div);
+});
+}
+
+function backup(){
+baixar("backup-frutinhas-ai.json",
+JSON.stringify(lerSalvos(),null,2),
+"application/json");
+}
+
+async function restaurar(event){
+const file=event.target.files[0];
+if(!file)return;
+
+try{
+const d=JSON.parse(await file.text());
+if(!d||typeof d!=="object"||Array.isArray(d)){
+throw Error("Arquivo inválido.");
+}
+
+const validos={};
+for(const [k,p] of Object.entries(d)){
+if(p&&typeof p==="object"&&
+Array.isArray(p.cenas)&&
+typeof p.serie==="string"&&
+Number.isInteger(p.episodio)){
+validos[k]=p;
+}
+}
+
+if(!Object.keys(validos).length){
+throw Error("Nenhum episódio válido.");
+}
+
+if(confirm("Importar episódios do backup?")){
+if(gravarSalvos({...lerSalvos(),...validos})){
+listarSalvos();
+alert("Backup restaurado!");
+}
+}
+}catch(e){
+alert("Erro ao restaurar: "+e.message);
+}
+event.target.value="";
+}
+
+function carregarVozes(){
+if(!("speechSynthesis" in window))return;
+const lista=$("vozSelecionada");
+const anterior=lista.value;
+lista.replaceChildren();
+
+const padrao=document.createElement("option");
+padrao.value="";
+padrao.textContent="Voz padrão";
+lista.appendChild(padrao);
+
+speechSynthesis.getVoices().forEach(v=>{
+const op=document.createElement("option");
+op.value=v.voiceURI;
+op.textContent=v.name+" ("+v.lang+")";
+lista.appendChild(op);
+});
+lista.value=anterior;
+}
+
+function falar(){
+if(!("speechSynthesis" in window)){
+alert("Voz não disponível neste navegador.");
+return;
+}
+const texto=campo("textoVoz").trim();
+if(!texto)return;
+
+speechSynthesis.cancel();
+const u=new SpeechSynthesisUtterance(texto);
+u.lang=campo("idioma");
+u.rate=Number(campo("velocidade"));
+
+const voz=speechSynthesis.getVoices().find(
+v=>v.voiceURI===campo("vozSelecionada")
+);
+if(voz)u.voice=voz;
+speechSynthesis.speak(u);
+}
+
+function pararVoz(){
+if("speechSynthesis" in window)speechSynthesis.cancel();
+}
+
+function efeito(tipo){
+try{
+const Audio=window.AudioContext||window.webkitAudioContext;
+if(!Audio)throw Error("Áudio não suportado.");
+if(!audioCtx)audioCtx=new Audio();
+audioCtx.resume();
+
+const agora=audioCtx.currentTime;
+const notas={
+suspense:[180,150,110],
+notificacao:[650,850],
+impacto:[160,65],
+alegria:[440,550,660,880]
+}[tipo];
+
+notas.forEach((freq,i)=>{
+const inicio=agora+i*.17;
+const osc=audioCtx.createOscillator();
+const ganho=audioCtx.createGain();
+
+osc.type=tipo==="impacto"?"sawtooth":"sine";
+osc.frequency.setValueAtTime(freq,inicio);
+ganho.gain.setValueAtTime(.0001,inicio);
+ganho.gain.exponentialRampToValueAtTime(.12,inicio+.02);
+ganho.gain.exponentialRampToValueAtTime(.0001,inicio+.16);
+osc.connect(ganho);
+ganho.connect(audioCtx.destination);
+osc.start(inicio);
+osc.stop(inicio+.17);
+});
+}catch(e){
+alert("Não foi possível tocar o efeito: "+e.message);
+}
+}
+
+function criarPrompt(d){
+return `Você é um roteirista profissional brasileiro de novelas e animações.
+
+Crie uma história ORIGINAL, inteligente, cinematográfica e profundamente humana.
+
+SÉRIE: ${d.serie}
+EPISÓDIO: ${d.episodio}
+IDEIA: ${d.ideia}
+PERSONAGENS: ${d.personagens}
+ESTILO VISUAL: ${d.estilo}
+FORMATO: ${d.formato}
+TOM: ${d.tom}
+EMOÇÃO DOMINANTE: ${d.emocao}
+CENAS: ${d.quantidade}
+DURAÇÃO POR CENA: ${d.duracao} segundos
+EPISÓDIO ANTERIOR: ${d.anterior||"Não informado"}
+DIREÇÃO ESPECIAL: ${d.extra||"Nenhuma"}
+
+REGRAS:
+1. Cada personagem tem desejos, medos, segredos e contradições.
+2. Use português brasileiro natural, sem frases robóticas.
+3. Inclua vírgulas, hesitações e interrupções quando fizer sentido.
+4. Use pausas de 0,5 a 3 segundos nos momentos importantes.
+5. Mostre emoções com olhos, mãos, postura, respiração e silêncio.
+6. Evite repetir diálogos ou explicações.
+7. Crie subtexto: personagens não dizem tudo que sentem.
+8. Preserve personalidade e aparência entre episódios.
+9. Cada cena deve avançar a história.
+10. Faça os diálogos caberem na duração solicitada.
+11. Termine com um gancho emocionante.
+12. Escreva instruções visuais específicas para cada cena.
+13. Não coloque letras nem legendas nos prompts de vídeo.
+
+RESPONDA SOMENTE COM JSON VÁLIDO, sem markdown:
+
+{
+ "cenas":[
+  {
+   "numero":1,
+   "acao":"Expressões, gestos e pausas",
+   "dialogo":"Nome: fala natural...",
+   "som":"Trilha e efeitos",
+   "promptVideo":"Descrição visual cinematográfica",
+   "promptAudio":"Emoções e direção de voz"
+  }
+ ]
+}
+
+Gere exatamente ${d.quantidade} cenas.
+Não use campos vazios.
+`;
+}
+
+function configurar(){
+const url=campo("endpoint").trim().replace(/\/$/,"");
+if(url&&!/^https:\/\//i.test(url)){
+alert("Use uma URL HTTPS.");
+return;
+}
+try{
+localStorage.setItem(CONFIG,JSON.stringify({
+url,pin:campo("pin")
+}));
+$("status").textContent="Conexão salva neste navegador.";
+}catch{
+alert("Não foi possível salvar a conexão.");
+}
+}
+
+function lerConfig(){
+try{
+return JSON.parse(localStorage.getItem(CONFIG)||"{}");
+}catch{return {}}
+}
+
+function extrairCenas(resposta){
+let x=resposta;
+
+if(typeof x==="string"){
+const texto=x.trim()
+.replace(/^```(?:json)?\s*/i,"")
+.replace(/```\s*$/,"");
+x=JSON.parse(texto);
+}
+
+if(x&&typeof x.text==="string"){
+return extrairCenas(x.text
